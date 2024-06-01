@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+        <title>LM Sheet Creator</title>
+        <link rel="'stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script>
+            var entered = 0;
+        
+            window.onload = function() {
+                 // auto focus in input -> mean all is ready to get dragable URL
+                 document.getElementById('fileName').focus();
+        
+                 document.getElementById('getURL').ondragenter= function(){      
+                       entered++;
+                       document.getElementById('uploadelement').style.display='block';
+                }
+        
+                 document.getElementById('getURL').ondragleave = function(){
+                       entered--;
+                       if (!entered) document.getElementById('uploadelement').style.display='none';
+                }
+        
+                document.getElementById('uploadelement').onchange = function(){
+                      if (this.value) { 
+                              document.getElementById('fileName').value = this.value.replace(/^C:\\fakepath\\/i, '');
+                      }
+        
+                }
+                // ready for using URL as string value of input
+                document.getElementById('showURL').onclick = function() {
+        
+                      console.log(  document.getElementById('fileName').value );
+                }
+            }
+        
+        
+        
+        </script>
+    </head>
+    <body>
+        <h1>Drag and drop the file below</h1>
+        <div id = "getURL" >
+            <form method="post" enctype="multipart/form-data" id="uploadform">
+                <input type="text" id="fileName" placeholder="Drag and drop here"/>
+                <input type="file" id="uploadelement" name="dragupload[]" />
+            </form>
+        </div>
+    </body>
+</html>
